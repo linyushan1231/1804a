@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.bw.mapper.BlogMapper">
+    	<select id="selCate" resultType="com.bw.bean.Category">
+    		select *,(select count(*) from blog b where b.cid = c.cid) as bcount from category c
+    	</select>
+    	
+    	<select id="selBlog" resultType="com.bw.bean.Blog" parameterType="int">
+    		select * from blog b,category c where b.cid = c.cid and b.cid = #{cid}
+    	</select>
+    	
+    	<insert id="addBlog" parameterType="com.bw.bean.Blog">
+    		insert into blog
+    		(title,content,label,cid)
+    		values
+    		(#{title},#{content},#{label},#{cid})
+    	</insert>
+    </mapper>
